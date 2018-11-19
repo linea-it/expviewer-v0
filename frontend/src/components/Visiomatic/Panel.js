@@ -33,7 +33,7 @@ class VisiomaticPanel extends Component {
     console.log("Visiomatic - DidMount")
 
     const map = this.libL.map(this.id, 
-      {fullscreenControl: true, zoom: 5});
+      {fullscreenControl: true, zoom: 1});
     
     this.libL.control.scale.wcs({pixels: false}).addTo(map);
     this.libL.control.reticle().addTo(map);
@@ -48,7 +48,6 @@ class VisiomaticPanel extends Component {
     var url = `${window.origin}/iipserver?FIF=image.ptif&WID=2000&CVT=jpeg`
 
     const layer = this.libL.tileLayer.iip(url, {}).addTo(map)
-
 
   }
 
