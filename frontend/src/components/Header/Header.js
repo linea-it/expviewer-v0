@@ -11,8 +11,6 @@ class Header extends Component {
             <Navbar.Group align={Alignment.RIGHT}>
                 <Button className="bp3-minimal" icon="notifications" />
                 <Navbar.Divider />
-                <Button className="bp3-minimal" icon="home" text="Home" />
-                <Navbar.Divider />
                 <Button className="bp3-minimal" icon="menu" />
             </Navbar.Group>
         </Navbar>   
