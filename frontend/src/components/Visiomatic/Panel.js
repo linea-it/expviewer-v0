@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import 'primeflex/primeflex.css';
 import './Viewer.css';
-import {Toolbar} from 'primereact/toolbar';
-import { Button } from 'primereact/button';
 import { uniqueId } from 'lodash'
+import PropTypes from 'prop-types';
 class VisiomaticPanel extends Component {
+
+  static propTypes = {
+    image: PropTypes.string
+  };
 
   constructor(props){
     super(props);
@@ -30,8 +33,6 @@ class VisiomaticPanel extends Component {
   }
 
   componentDidMount() {
-    console.log("Visiomatic - DidMount")
-
     const map = this.libL.map(this.id, 
       {fullscreenControl: true, zoom: 1});
     
@@ -43,11 +44,27 @@ class VisiomaticPanel extends Component {
       position: 'topright'
     }).addTo(map);
 
-    //var url = 'https://desportal.cosmology.illinois.edu:8080/visiomatic?FIF=data/releases/desarchive/OPS/multiepoch/Y3A1/r2577/DES0223-1958/p01/qa/DES0223-1958_r2577p01.ptif&CNT=0.7&GAM=0.3571&CTW=-0.17360014137426552,-0.1468986152782014,-0.17360014137426552,0.4748051237315408,0.8680007068713278,0;-0.17360014137426552,0.11278933738126469,0.8680007068713278,0.11278933738126469,-0.17360014137426552,0;0.8680007068713278,0.4748051237315408,-0.17360014137426552,-0.1468986152782014,-0.17360014137426552,0&JTL=3,15'
-    // var url = 'http://localhost:7001/iipserver/?FIF=output_image.tif&WID=2000&CVT=jpeg'
-    var url = `${window.origin}/iipserver?FIF=image.ptif&WID=2000&CVT=jpeg`
+    this.map = map;
 
-    const layer = this.libL.tileLayer.iip(url, {}).addTo(map)
+    this.changeImage();
+  }
+
+  componentDidUpdate(nextProps){
+    this.changeImage();
+  };
+
+
+  changeImage=()=>{
+    if (this.props.image) {  
+
+      if (this.layer) {
+        this.map.removeLayer(this.layer)
+      }
+
+      var url = `${window.origin}/iipserver?FIF=${this.props.image}&WID=2000&CVT=jpeg`
+
+      this.layer = this.libL.tileLayer.iip(url, {}).addTo(this.map)
+    }
 
   }
 
@@ -59,18 +76,7 @@ class VisiomaticPanel extends Component {
   render() {
     // Ajuste no Tamanho do container
     return (
-      <div>
-        <Toolbar>
-          <div className="p-toolbar-group-left">
-              <Button label="Back"  style={{marginRight:'.25em'}} onClick={() => this.onBack()} />
-          </div>
-        </Toolbar>
-        <div className="p-grid home-container ">
-            <div className="p-col-6">
-                  <div id={this.id} className="visiomatic-container" style={{width: '100vw', height:'calc(100vh - 108px)'}}></div>
-            </div>
-        </div>
-      </div>
+      <div id={this.id} className="visiomatic-container" style={{width: '100vw', height:'calc(100vh - 52px)'}}></div>
     )
   }
 }
