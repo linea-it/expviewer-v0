@@ -10,49 +10,51 @@ import { Button } from 'primereact/button';
 
 
 class App extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
-      image: 'v159494-fg-focalplane-summary.ptif',
+      image: "v159494-fg-focalplane-summary.ptif",
       images: [
-        'v159494-fg-focalplane-summary.ptif',
-        'v12456-fy-focalplane-summary.ptif',
-        'v166969-fy-focalplane-summary.ptif',
-        'v161984-fy-focalplane-summary.ptif',
-        'v174549-fi-focalplane-summary.ptif',
-        'v167899-fy-focalplane-summary.ptif',
-        'v174602-fi-focalplane-summary.ptif',
-        'v32678-fz-focalplane-summary.ptif',
-        'v37648-fy-focalplane-summary.ptif',
-        'v8027-fz-focalplane-summary.ptif',
-      ]
-    }
+        "v159494-fg-focalplane-summary.ptif",
+        "v12456-fy-focalplane-summary.ptif",
+        "v166969-fy-focalplane-summary.ptif",
+        "v161984-fy-focalplane-summary.ptif",
+        "v174549-fi-focalplane-summary.ptif",
+        "v167899-fy-focalplane-summary.ptif",
+        "v174602-fi-focalplane-summary.ptif",
+        "v32678-fz-focalplane-summary.ptif",
+        "v37648-fy-focalplane-summary.ptif",
+        "v8027-fz-focalplane-summary.ptif"
+      ],
+      binSize: 2
+    };
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.onChangeImage, 20000);
+    // this.interval = setInterval(this.onChangeImage, 20000);
   }
 
+  changeBinSize = evt => {
+    this.setState({ binSize: evt.target.value });
+  };
+
   componentWillUnmount() {
-    this.interval.clearInterval();
+    // this.interval.clearInterval();
   }
 
   onChangeImage = () => {
     const id = Math.floor(Math.random() * 10);
-    this.setState({image: this.state.images[id]})
-  }
+    this.setState({ image: this.state.images[id] });
+  };
 
   render() {
-     return (
-      <div className="layout-wrapper">
-        <Header />
+    return <div className="layout-wrapper">
+      <Header binSize={this.state.binSize} changeBinSize={this.changeBinSize} />
         <div className="layout-content">
-          <VisiomaticPanel image={this.state.image}/>
+        <VisiomaticPanel image={this.state.image} binSize={this.state.binSize} />
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
