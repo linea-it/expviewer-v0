@@ -54,16 +54,22 @@ class VisiomaticPanel extends Component {
   };
 
 
-  changeImage=()=>{
+  changeImage=async ()=>{
     if (this.props.image) {  
 
       if (this.layer) {
         this.map.removeLayer(this.layer)
       }
 
-      var url = `${window.origin}/iipserver?FIF=${this.props.image}&WID=2000&CVT=jpeg`
+      var url = `http://localhost/iip?FIF=img2.tif&WID=256&CVT=jpeg&RGN=0.25,0,0.1,0.1`
+      var url2 = `http://localhost/iip?FIF=img.tif&WID=256&CVT=jpeg&RGN=0.25,0,0.1,0.1`
 
       this.layer = this.libL.tileLayer.iip(url, {}).addTo(this.map)
+      console.log(this.libL.tileLayer.iip(url, {}))
+      var layer2 = this.libL.tileLayer.iip(url2, {})
+      layer2.addTo(this.map)
+      console.log(layer2)
+      console.log(layer2.createTile)
     }
 
   }

@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.onChangeImage, 20000);
+    // this.interval = setInterval(this.onChangeImage, 20000);
   }
 
   componentWillUnmount() {
